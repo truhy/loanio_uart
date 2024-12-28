@@ -1,4 +1,4 @@
-# Loan I/O examples
+# Cyclone V SoC loan I/O examples
 
 ## Overview
 
