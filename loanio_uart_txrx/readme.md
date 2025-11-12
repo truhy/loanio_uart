@@ -7,9 +7,9 @@ Hardware design showing the FPGA side directly using peripherals on the HPS side
 It echoes back serial bytes via the HPS UART-USB on the DE10-Nano board.  When the FPGA input key0 is pressed the HPS LED is turned on.  It achieves this using the HPS pin mux loan I/O.
 
 In Platform Designer these HPS pins are loaned out to the FPGA:
-	- LoanIO 49 is connected to FTDI FT232R TX pin (USB-UART)
-	- LoanIO 50 is connected to FTDI FT232R RX pin (USB-UART)
-	- LoanIO 53 is connected to HPS_LED
+- LoanIO 49 is connected to FTDI FT232R TX pin (USB-UART)
+- LoanIO 50 is connected to FTDI FT232R RX pin (USB-UART)
+- LoanIO 53 is connected to HPS_LED
 	
 By default the loan I/Os are held in reset, meaning initialisation is required to configure the HPS pin mux and loan I/Os, which can be done by U-Boot or U-Boot-SPL.
 

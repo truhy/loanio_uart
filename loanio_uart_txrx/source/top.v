@@ -160,10 +160,11 @@ module top(
 	wire hps_reset_n;
 	wire master_reset_n = hps_reset_n;
 	
-	// Loan I/O IP ports
-	wire [66:0] loanio_oe;   // Pin direction: 0 = input, 1 = output
-	wire [66:0] loanio_in;   // Read port from pins: 1 = high, 0 = low
-	wire [66:0] loanio_out;  // Write port to pins: 1 = high, 0 = low
+	// Loan I/O bitmaps.  Each bit belongs to a specific loan I/O pin:
+	// bit0 = loan I/O pin 0, bit1 = loan I/O pin 1, bit 2 = loan I/O pin 2, etc
+	wire [66:0] loanio_oe;   // Pin direction, where each bit is: 0 = input mode, 1 = output mode
+	wire [66:0] loanio_in;   // Read from pin, where each bit is: 1 = high, 0 = low
+	wire [66:0] loanio_out;  // Write to pin, where each bit is: 1 = high, 0 = low
 
 	// HPS (SoC) instance
 	soc_system u0(
@@ -341,17 +342,17 @@ module top(
 	// ===================
 	
 	// Set pin directions
-	assign loanio_oe[48:0]  = 0;  // Input unused pins
-	assign loanio_oe[49]    = 0;  // Input UART_RX pin (LoanIO 49) *WARNING: do not set this to 1
-	assign loanio_oe[50]    = 1;  // Output UART_TX pin (LoanIO 50)
-	assign loanio_oe[52:51] = 0;  // Input unused pins
-	assign loanio_oe[53]    = 1;  // Output HPS_LED pin (LoanIO 53)
-	assign loanio_oe[66:54] = 0;  // Input unused pins
+	assign loanio_oe[48:0]  = 0;  // Unused pins as inputs
+	assign loanio_oe[49]    = 0;  // UART_RX pin as input (LoanIO 49) *WARNING: do not set this to 1
+	assign loanio_oe[50]    = 1;  // UART_TX pin as output (LoanIO 50)
+	assign loanio_oe[52:51] = 0;  // Unused pins as inputs
+	assign loanio_oe[53]    = 1;  // HPS_LED pin as output (LoanIO 53)
+	assign loanio_oe[66:54] = 0;  // Unused pins as inputs
 	
-	// Set input & output pins
-	assign uart_rx = loanio_in[49];
-	assign loanio_out[50] = uart_tx;
-	assign loanio_out[53] = debounced_key0;
+	// Set I/O pin values
+	assign uart_rx = loanio_in[49];          // Read from pin
+	assign loanio_out[50] = uart_tx;         // Write to pin
+	assign loanio_out[53] = debounced_key0;  // Write to pin
 	
 	// =================================
 	// Main state machine to serial echo
@@ -378,7 +379,7 @@ module top(
 						state <= state + 1;
 				end
 			
-				// Wait until not busy then transmit a string message to UART (loop for each character until done)
+				// Wait until UART is not busy, then transmit message (loop for each character until done)
 				1: begin
 					if(!uart_tx_busy) begin
 						if(uart_msg_counter != -1) begin
@@ -393,7 +394,7 @@ module top(
 					end
 				end
 				
-				// Wait until busy, i.e. when the transmit starts
+				// Wait until UART is busy, i.e. until transmit starts
 				2: begin
 					if(uart_tx_busy) begin
 						uart_tx_wr <= 0;
@@ -418,7 +419,7 @@ module top(
 					end
 				end
 				
-				// Wait until busy, i.e. when the transmit starts
+				// Wait until UART is busy, i.e. until transmit starts
 				5: begin
 					if(uart_tx_busy) begin
 						uart_tx_wr <= 0;
