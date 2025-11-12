@@ -25,8 +25,7 @@
 	Version: 20241227
 	
 	Hardware design showing the FPGA side directly using peripherals on the HPS
-	side.  It lights up the HPS LED and sends a serial message to the UART-USB on
-	the DE10-Nano board, which are both connected to the HPS side.
+	side.
 	
 	When the FPGA input key0 is pressed the HPS LED is turned on and the message
 	is sent.  FPGA controls the HPS LED and UART-USB on the DE10-Nano board, which
