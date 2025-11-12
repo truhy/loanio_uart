@@ -30,7 +30,8 @@
 	
 	It echoes back serial bytes via the HPS UART-USB on the DE10-Nano board.
 
-	The FPGA is able to control the dedicated HPS pins using the HPS pin mux loan I/O.
+	The FPGA is able to control the dedicated HPS pins using the HPS pin mux loan
+	I/Os.
 	
 	In Platform Designer these HPS pins are loaned out to the FPGA:
 	- LoanIO 49 is connected to FTDI FT232R TX pin (UART-USB)
