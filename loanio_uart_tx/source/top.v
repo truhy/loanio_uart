@@ -31,8 +31,7 @@
 	is sent.  FPGA controls the HPS LED and UART-USB on the DE10-Nano board, which
 	are both connected to the HPS side.
 	
-	When the FPGA input key0 is pressed the HPS LED is turned on and the message
-	is sent.  It achieves this using the HPS pin mux loan I/O.
+	The FPGA is able to contro the dedicated HPS pins using the HPS pin mux loan I/O.
 	
 	In Platform Designer these HPS pins are loaned out to the FPGA:
 	- LoanIO 49 is connected to FTDI FT232R TX pin (UART-USB)
