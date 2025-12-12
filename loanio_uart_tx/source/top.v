@@ -331,7 +331,7 @@ module top(
 	
 	// Set pin directions
 	assign loanio_oe[48:0]  = 0;  // Unused pins as inputs
-	assign loanio_oe[49]    = 0;  // UART_RX pin as input (LoanIO 49) *WARNING: do not set this to 1
+	assign loanio_oe[49]    = 0;  // UART_RX pin as input (LoanIO 49) *WARNING: do not set this to 1
 	assign loanio_oe[50]    = 1;  // UART_TX pin as output (LoanIO 50)
 	assign loanio_oe[52:51] = 0;  // Unused pins as inputs
 	assign loanio_oe[53]    = 1;  // HPS_LED pin as output (LoanIO 53)
